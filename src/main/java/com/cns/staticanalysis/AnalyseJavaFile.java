@@ -12,10 +12,10 @@ import java.io.IOException;
 
 import org.antlr.v4.runtime.CharStream;
 
-public class AnalyseFile {
+public class AnalyseJavaFile {
     ParseTree parseTree;
 
-    public AnalyseFile(String filePath) {
+    public AnalyseJavaFile(String filePath) {
         try {
             CharStream inputStream = CharStreams.fromFileName(filePath);
             JavaLexer javaLexer = new JavaLexer(inputStream);

@@ -21,7 +21,7 @@ public class TargetSDK {
 
     public void Analyse() {
         for (File file : files) {
-            AnalyseFile analyseFile = new AnalyseFile(file.getPath());
+            AnalyseJavaFile analyseFile = new AnalyseJavaFile(file.getPath());
             analyseFile.Analyse();
         }
     }
