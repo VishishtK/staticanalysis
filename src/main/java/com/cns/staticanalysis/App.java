@@ -16,6 +16,7 @@ import com.cns.grammar.JavaParser.TypeDeclarationContext;
 public class App {
     public static void main(String[] args) {
         TargetSDK sdk = new TargetSDK("/Users/vishy/Desktop/CNS-Project-SDK/dropbox-sdk-java/", ".java");
+        sdk.Analyse();
     }
 }
 

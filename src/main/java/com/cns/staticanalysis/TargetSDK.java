@@ -15,6 +15,17 @@ public class TargetSDK {
         listFilesForFolder(new File(pathToSDK));
     }
 
+    public ArrayList<File> getFiles() {
+        return files;
+    }
+
+    public void Analyse() {
+        for (File file : files) {
+            AnalyseFile analyseFile = new AnalyseFile(file.getPath());
+            analyseFile.Analyse();
+        }
+    }
+
     private void listFilesForFolder(final File folder) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
