@@ -15,35 +15,7 @@ import com.cns.grammar.JavaParser.TypeDeclarationContext;
 
 public class App {
     public static void main(String[] args) {
-        // Class code to perform static code analysis on. You may read it from ".java"
-        // files.
-        String[] classes = new String[] { "public abstract class AbstractPerson { void work(){} }",
-
-                "public class AbstractPerson { void work(){} }",
-
-                "public abstract class JustPerson { void work(){} }" };
-
-        // Iterate on class codes.
-        for (String classCode : classes) {
-
-            // Prepare lexer & parser from code.
-            CodePointCharStream inputStream = CharStreams.fromString(classCode);
-            JavaLexer JavaLexer = new JavaLexer(inputStream);
-            CommonTokenStream commonTokenStream = new CommonTokenStream(JavaLexer);
-            JavaParser javaParser = new JavaParser(commonTokenStream);
-
-            // Prepare parse tree or AST (Abstract Syntax Tree)
-            ParseTree tree = javaParser.compilationUnit();
-
-            // Register listener class which will perform checks.
-            ClassNameOfAbstractClassListener listener = new ClassNameOfAbstractClassListener();
-            ParseTreeWalker walker = new ParseTreeWalker();
-
-            // Walk method will walk through all tokens & call appropriate listener methods
-            // where we will perform checks.
-            walker.walk(listener, tree);
-        }
-
+        TargetSDK sdk = new TargetSDK("/Users/vishy/Desktop/CNS-Project-SDK/dropbox-sdk-java/", ".java");
     }
 }
 
