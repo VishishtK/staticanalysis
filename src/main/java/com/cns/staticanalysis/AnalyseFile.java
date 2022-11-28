@@ -30,14 +30,14 @@ public class AnalyseFile {
         }
     }
 
-    public void Analyse(){
-            // Register listener class which will perform checks.
-			JavaStringChecker listener = new JavaStringChecker();
-			ParseTreeWalker walker = new ParseTreeWalker();
+    public void Analyse() {
+        // Register listener class which will perform checks.
+        JavaListner listener = new JavaListner();
+        ParseTreeWalker walker = new ParseTreeWalker();
 
-			// Walk method will walk through all tokens & call appropriate listener methods
-			// where we will perform checks.
-			walker.walk(listener, parseTree);
+        // Walk method will walk through all tokens & call appropriate listener methods
+        // where we will perform checks.
+        walker.walk(listener, parseTree);
     }
 
 }

@@ -8,11 +8,7 @@ import java.util.stream.Collectors;
 import com.cns.grammar.JavaParser;
 import com.cns.grammar.JavaParserBaseListener;
 
-public class JavaStringChecker extends JavaParserBaseListener {
-
-    @Override
-    public void enterMemberDeclaration(JavaParser.MemberDeclarationContext ctx) {
-    }
+public class JavaListner extends JavaParserBaseListener {
 
     @Override
     public void enterMethodDeclaration(JavaParser.MethodDeclarationContext ctx) {
@@ -40,6 +36,26 @@ public class JavaStringChecker extends JavaParserBaseListener {
             if (list.size() > 0)
                 System.out.println("<Field> " + fieldType + " " + list);
         }
+
+        if (fieldType.equals("StringBuilder")) {
+            List<String> list = ctx.variableDeclarators().variableDeclarator()
+                    .stream()
+                    .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
+                    .map(x -> x.getText()).collect(Collectors.toList());
+
+            if (list.size() > 0)
+                System.out.println("<Field StringBuilder >  " + fieldType + " " + list);
+        }
+
+        if (fieldType.equals("char[]")) {
+            List<String> list = ctx.variableDeclarators().variableDeclarator()
+                    .stream()
+                    .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
+                    .map(x -> x.getText()).collect(Collectors.toList());
+
+            if (list.size() > 0)
+                System.out.println("<Field char[] >  " + fieldType + " " + list);
+        }
     }
 
     @Override
@@ -55,14 +71,31 @@ public class JavaStringChecker extends JavaParserBaseListener {
             if (list.size() > 0)
                 System.out.println("<Local Var> " + fieldType + " " + list);
         }
-    }
 
-    @Override
-    public void enterConstDeclaration(JavaParser.ConstDeclarationContext ctx) {
+        if (fieldType.equals("StringBuilder")) {
+            List<String> list = ctx.variableDeclarators().variableDeclarator()
+                    .stream()
+                    .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
+                    .map(x -> x.getText()).collect(Collectors.toList());
+
+            if (list.size() > 0)
+                System.out.println("<Local Var StringBuilder >  " + fieldType + " " + list);
+        }
+
+        if (fieldType.equals("char[]")) {
+            List<String> list = ctx.variableDeclarators().variableDeclarator()
+                    .stream()
+                    .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
+                    .map(x -> x.getText()).collect(Collectors.toList());
+
+            if (list.size() > 0)
+                System.out.println("<Local Var char[] >  " + fieldType + " " + list);
+        }
     }
 
     private boolean isCriticalVariable(String var) {
-        Pattern pattern = Pattern.compile("(?:pass|key|crypt|imei|username|identifier)", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("(?:pass|key|crypt|imei|username|identifier|secret|token|auth)",
+                Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(var);
         return matcher.find();
     }
