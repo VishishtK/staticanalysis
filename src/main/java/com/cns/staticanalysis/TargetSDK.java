@@ -28,6 +28,10 @@ public class TargetSDK {
                 }
                 break;
             case ".go":
+                for (File file : files) {
+                    AnalyseGolangFile analyseFile = new AnalyseGolangFile(file.getPath());
+                    analyseFile.Analyse();
+                }
                 break;
             default:
                 System.out.println("Language not supported");
