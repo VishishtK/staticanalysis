@@ -20,10 +20,20 @@ public class TargetSDK {
     }
 
     public void Analyse() {
-        for (File file : files) {
-            AnalyseJavaFile analyseFile = new AnalyseJavaFile(file.getPath());
-            analyseFile.Analyse();
+        switch (fileExtension) {
+            case ".java":
+                for (File file : files) {
+                    AnalyseJavaFile analyseFile = new AnalyseJavaFile(file.getPath());
+                    analyseFile.Analyse();
+                }
+                break;
+            case ".go":
+                break;
+            default:
+                System.out.println("Language not supported");
+
         }
+
     }
 
     private void listFilesForFolder(final File folder) {
