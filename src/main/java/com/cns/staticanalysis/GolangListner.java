@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -44,17 +43,40 @@ public class GoLangListner extends GoParserBaseListener {
     public void enterMethodDecl(GoParser.MethodDeclContext ctx) {
     }
 
+    // @Override
+    // public void enterVarDecl(GoParser.VarDeclContext ctx) {
+    // List<List<TerminalNode>> varNameList = ctx.varSpec().stream()
+    // .filter(var -> var.type_() != null)
+    // .filter(var -> var.type_().getText().equals("string"))
+    // .map(var -> var.identifierList().IDENTIFIER())
+    // .collect(Collectors.toList());
+
+    // List<String> criticalVars = new ArrayList<>();
+
+    // for (List<TerminalNode> varNames : varNameList) {
+    // criticalVars.addAll(
+    // varNames.stream()
+    // .filter(var -> isCriticalVariable(var.getText()))
+    // .map(var -> var.getText())
+    // .collect(Collectors.toList()));
+    // }
+
+    // if (criticalVars.size() > 0)
+    // System.out.println("Var declaration " + criticalVars);
+    // }
+
     @Override
-    public void enterVarDecl(GoParser.VarDeclContext ctx) {
-        List<List<TerminalNode>> varNameList = ctx.varSpec().stream()
+    public void enterStructType(GoParser.StructTypeContext ctx) {
+        List<List<TerminalNode>> identifiers = ctx.fieldDecl()
+                .stream()
                 .filter(var -> var.type_() != null)
-                .filter(var -> var.type_().getText().equals("string"))
-                .map(var -> var.identifierList().IDENTIFIER())
+                .filter(f -> f.type_().getText().equals("string"))
+                .map(f -> f.identifierList().IDENTIFIER())
                 .collect(Collectors.toList());
 
         List<String> criticalVars = new ArrayList<>();
 
-        for (List<TerminalNode> varNames : varNameList) {
+        for (List<TerminalNode> varNames : identifiers) {
             criticalVars.addAll(
                     varNames.stream()
                             .filter(var -> isCriticalVariable(var.getText()))
@@ -63,15 +85,18 @@ public class GoLangListner extends GoParserBaseListener {
         }
 
         if (criticalVars.size() > 0)
-            System.out.println("Var declaration " + criticalVars);
-    }
+            System.out.println("Struct feild " + criticalVars);
 
-    @Override
-    public void enterTypeDecl(GoParser.TypeDeclContext ctx) {
     }
 
     @Override
     public void enterTypeSpec(GoParser.TypeSpecContext ctx) {
+        if (ctx.type_().typeLit() != null
+                && ctx.type_().typeLit().structType() != null
+                && isCriticalVariable(ctx.IDENTIFIER().getText())) {
+            // System.out.println("Struct " + ctx.IDENTIFIER().getText());
+        }
+
     }
 
     @Override
