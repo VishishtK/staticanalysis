@@ -46,7 +46,7 @@ public class TargetSDK {
                 listFilesForFolder(fileEntry);
             } else if (isJava(fileEntry)) {
                 files.add(fileEntry);
-                // System.out.println(fileEntry.getName());
+                // System.out.println(fileEntry.getPath());
             }
         }
     }

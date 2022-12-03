@@ -31,7 +31,7 @@ public class AnalyseGolangFile {
 
     public void Analyse() {
         // Register listener class which will perform checks.
-        GoListner listener = new GoListner();
+        GoLangListner listener = new GoLangListner();
         ParseTreeWalker walker = new ParseTreeWalker();
 
         // Walk method will walk through all tokens & call appropriate listener methods
