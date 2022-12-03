@@ -15,55 +15,56 @@ public class GoLangListner extends GoParserBaseListener {
 
     @Override
     public void enterFunctionDecl(GoParser.FunctionDeclContext ctx) {
-        // Un-named return types
-        // String returnType = ctx.signature().result().type_().getText();
-        // if (returnType.equals("string")) {
-        // System.out.println(ctx.signature().result().getText());
-        // }
-        // if (ctx.signature().result() == null)
-        // return;
+        if (ctx.signature().result() == null) {
+            return;
+        }
+        if (!isCriticalVariable(ctx.IDENTIFIER().getText())) {
+            return;
+        }
 
-        // if(ctx.IDENTIFIER().equals("AlphaUpload")){
-        // System.out.println(ctx.getText());
-        // }
+        if (ctx.signature().result().parameters() != null) {
+            List<GoParser.ParameterDeclContext> paramsStrings = ctx.signature().result().parameters().parameterDecl()
+                    .stream()
+                    .filter(p -> p.type_().getText().equals("string"))
+                    .collect(Collectors.toList());
 
-        // if (ctx.signature().result().parameters() != null) {
-        // System.out.println("Function " + ctx.IDENTIFIER().getText());
-        // System.out.println(ctx.signature().result().parameters().getText());
-        // }
+            if (paramsStrings.size() > 0)
+                System.out.println("Function Return Params " + ctx.IDENTIFIER().getText());
+        }
 
-        // if (ctx.signature().result().type_() != null) {
-        // System.out.println("Function " + ctx.IDENTIFIER().getText());
-        // System.out.println(ctx.signature().result().type_().getText());
-        // }
+        if (ctx.signature().result().type_() != null) {
+            if (ctx.signature().result().type_().getText().equals("string")) {
+                System.out.println("Function Return Type " + ctx.IDENTIFIER().getText());
+            }
+        }
 
     }
 
     @Override
     public void enterMethodDecl(GoParser.MethodDeclContext ctx) {
+        if (ctx.signature().result() == null) {
+            return;
+        }
+        if (!isCriticalVariable(ctx.IDENTIFIER().getText())) {
+            return;
+        }
+
+        if (ctx.signature().result().parameters() != null) {
+            List<GoParser.ParameterDeclContext> paramsStrings = ctx.signature().result().parameters().parameterDecl()
+                    .stream()
+                    .filter(p -> p.type_().getText().equals("string"))
+                    .collect(Collectors.toList());
+
+            if (paramsStrings.size() > 0)
+                System.out.println("Method Return Params " + ctx.IDENTIFIER().getText());
+        }
+
+        if (ctx.signature().result().type_() != null) {
+            if (ctx.signature().result().type_().getText().equals("string")) {
+                System.out.println("Method Return Type " + ctx.IDENTIFIER().getText());
+            }
+        }
     }
-
-    // @Override
-    // public void enterVarDecl(GoParser.VarDeclContext ctx) {
-    // List<List<TerminalNode>> varNameList = ctx.varSpec().stream()
-    // .filter(var -> var.type_() != null)
-    // .filter(var -> var.type_().getText().equals("string"))
-    // .map(var -> var.identifierList().IDENTIFIER())
-    // .collect(Collectors.toList());
-
-    // List<String> criticalVars = new ArrayList<>();
-
-    // for (List<TerminalNode> varNames : varNameList) {
-    // criticalVars.addAll(
-    // varNames.stream()
-    // .filter(var -> isCriticalVariable(var.getText()))
-    // .map(var -> var.getText())
-    // .collect(Collectors.toList()));
-    // }
-
-    // if (criticalVars.size() > 0)
-    // System.out.println("Var declaration " + criticalVars);
-    // }
 
     @Override
     public void enterStructType(GoParser.StructTypeContext ctx) {
@@ -94,13 +95,24 @@ public class GoLangListner extends GoParserBaseListener {
         if (ctx.type_().typeLit() != null
                 && ctx.type_().typeLit().structType() != null
                 && isCriticalVariable(ctx.IDENTIFIER().getText())) {
-            // System.out.println("Struct " + ctx.IDENTIFIER().getText());
+            System.out.println("Struct " + ctx.IDENTIFIER().getText());
         }
 
     }
 
     @Override
     public void enterVarSpec(GoParser.VarSpecContext ctx) {
+        if (ctx.type_() == null || !ctx.type_().getText().equals("string")) {
+            return;
+        }
+
+        List<String> criticalVars = ctx.identifierList().IDENTIFIER().stream()
+                .filter(i -> isCriticalVariable(i.getText()))
+                .map(i -> i.getText())
+                .collect(Collectors.toList());
+
+        if (criticalVars.size() > 0)
+            System.out.println("Var " + criticalVars);
     }
 
     private boolean isCriticalVariable(String var) {
