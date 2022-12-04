@@ -7,6 +7,7 @@ public class TargetSDK {
 
     ArrayList<File> files;
     String fileExtension;
+    String pathToSDK;
 
     long totalCriticalVars;
     long totalCriticalFields;
@@ -17,6 +18,7 @@ public class TargetSDK {
     long totalSafeCriticalMethods;
 
     public TargetSDK(String pathToSDK, String fileExtension) {
+        this.pathToSDK = pathToSDK;
         this.fileExtension = fileExtension;
         files = new ArrayList<>();
 
