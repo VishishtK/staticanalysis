@@ -11,7 +11,7 @@ import com.cns.grammar.GoParser;
 
 import java.io.IOException;
 
-public class AnalyseGolangFile {
+public class AnalyseGolangFile implements AnalyseFile {
     ParseTree parseTree;
 
     public AnalyseGolangFile(String filePath) {

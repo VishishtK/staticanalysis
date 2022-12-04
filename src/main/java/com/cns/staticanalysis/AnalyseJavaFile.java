@@ -11,7 +11,7 @@ import com.cns.grammar.JavaParser;
 
 import java.io.IOException;
 
-public class AnalyseJavaFile {
+public class AnalyseJavaFile implements AnalyseFile{
     ParseTree parseTree;
 
     public AnalyseJavaFile(String filePath) {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class TargetSDK {
 
     ArrayList<File> files;
+    ArrayList<AnalyseFile> analysedFiles;
     String fileExtension;
     String pathToSDK;
 
@@ -35,12 +36,14 @@ public class TargetSDK {
                 for (File file : files) {
                     AnalyseJavaFile analyseFile = new AnalyseJavaFile(file.getPath());
                     analyseFile.Analyse();
+                    analysedFiles.add(analyseFile);
                 }
                 break;
             case ".go":
                 for (File file : files) {
                     AnalyseGolangFile analyseFile = new AnalyseGolangFile(file.getPath());
                     analyseFile.Analyse();
+                    analysedFiles.add(analyseFile);
                 }
                 break;
             default:
