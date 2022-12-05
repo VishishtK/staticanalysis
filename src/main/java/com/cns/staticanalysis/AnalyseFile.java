@@ -2,13 +2,13 @@ package com.cns.staticanalysis;
 
 public abstract class AnalyseFile {
 
-    long totalCriticalVars;
-    long totalCriticalFields;
-    long totalCriticalMethods;
+    long totalCriticalVars = 0;
+    long totalCriticalFields = 0;
+    long totalCriticalMethods = 0;
 
-    long totalSafeCriticalVars;
-    long totalSafeCriticalFields;
-    long totalSafeCriticalMethods;
+    long totalSafeCriticalVars = 0;
+    long totalSafeCriticalFields = 0;
+    long totalSafeCriticalMethods = 0;
 
     public abstract void Analyse();
 }

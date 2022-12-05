@@ -10,18 +10,19 @@ public class TargetSDK {
     String fileExtension;
     String pathToSDK;
 
-    long totalCriticalVars;
-    long totalCriticalFields;
-    long totalCriticalMethods;
+    long totalCriticalVars = 0;
+    long totalCriticalFields = 0;
+    long totalCriticalMethods = 0;
 
-    long totalSafeCriticalVars;
-    long totalSafeCriticalFields;
-    long totalSafeCriticalMethods;
+    long totalSafeCriticalVars = 0;
+    long totalSafeCriticalFields = 0;
+    long totalSafeCriticalMethods = 0;
 
     public TargetSDK(String pathToSDK, String fileExtension) {
         this.pathToSDK = pathToSDK;
         this.fileExtension = fileExtension;
         files = new ArrayList<>();
+        analysedFiles = new ArrayList<>();
 
         listFilesForFolder(new File(pathToSDK));
     }
@@ -50,6 +51,20 @@ public class TargetSDK {
                 System.out.println("Language not supported");
 
         }
+
+    }
+
+    public void GetResult() {
+        for (AnalyseFile file : analysedFiles) {
+            this.totalCriticalFields += file.totalCriticalFields;
+            this.totalCriticalMethods += file.totalCriticalMethods;
+            this.totalCriticalVars += file.totalCriticalVars;
+
+            this.totalSafeCriticalFields += file.totalSafeCriticalFields;
+            this.totalSafeCriticalMethods += file.totalSafeCriticalMethods;
+            this.totalSafeCriticalVars += file.totalSafeCriticalVars;
+        }
+
 
     }
 

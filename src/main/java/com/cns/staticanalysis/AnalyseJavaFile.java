@@ -13,7 +13,6 @@ import java.io.IOException;
 
 public class AnalyseJavaFile extends AnalyseFile {
     ParseTree parseTree;
-    
 
     public AnalyseJavaFile(String filePath) {
         try {
@@ -38,6 +37,14 @@ public class AnalyseJavaFile extends AnalyseFile {
         // Walk method will walk through all tokens & call appropriate listener methods
         // where we will perform checks.
         walker.walk(listener, parseTree);
+
+        this.totalCriticalFields += listener.totalCriticalFields;
+        this.totalCriticalMethods += listener.totalCriticalMethods;
+        this.totalCriticalVars += listener.totalCriticalVars;
+
+        this.totalSafeCriticalFields += listener.totalSafeCriticalFields;
+        this.totalSafeCriticalMethods += listener.totalSafeCriticalMethods;
+        this.totalSafeCriticalVars += listener.totalSafeCriticalVars;
     }
 
 }

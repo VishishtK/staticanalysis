@@ -16,6 +16,7 @@ public class App {
 
         System.out.println("Analysing SDK");
         sdk.Analyse();
+        sdk.GetResult();
 
     }
 }
