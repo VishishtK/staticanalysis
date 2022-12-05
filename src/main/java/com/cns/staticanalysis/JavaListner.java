@@ -10,12 +10,29 @@ import com.cns.grammar.JavaParserBaseListener;
 
 public class JavaListner extends JavaParserBaseListener {
 
+    long totalCriticalVars = 0;
+    long totalCriticalFields = 0;
+    long totalCriticalMethods = 0;
+
+    long totalSafeCriticalVars = 0;
+    long totalSafeCriticalFields = 0;
+    long totalSafeCriticalMethods = 0;
+
     @Override
     public void enterMethodDeclaration(JavaParser.MethodDeclarationContext ctx) {
         String returnType = ctx.typeTypeOrVoid().getText();
         if (returnType.equals("String")) {
-            if (isCriticalVariable(ctx.identifier().getText()))
+            if (isCriticalVariable(ctx.identifier().getText())) {
                 System.out.println("<Method> " + returnType + " " + ctx.identifier().getText());
+                totalCriticalMethods++;
+            }
+        }
+
+        if (isSafeType(returnType)) {
+            if (isCriticalVariable(ctx.identifier().getText())) {
+                System.out.println("<Safe Method> " + returnType + " " + ctx.identifier().getText());
+                totalSafeCriticalMethods++;
+            }
         }
     }
 
@@ -29,8 +46,10 @@ public class JavaListner extends JavaParserBaseListener {
                     .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
                     .map(x -> x.getText()).collect(Collectors.toList());
 
-            if (list.size() > 0)
+            if (list.size() > 0) {
                 System.out.println("<Field> " + fieldType + " " + list);
+                totalCriticalFields += list.size();
+            }
         }
 
         if (isSafeType(fieldType)) {
@@ -39,8 +58,10 @@ public class JavaListner extends JavaParserBaseListener {
                     .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
                     .map(x -> x.getText()).collect(Collectors.toList());
 
-            if (list.size() > 0)
+            if (list.size() > 0) {
                 System.out.println("<Safe Field >  " + fieldType + " " + list);
+                totalSafeCriticalFields += list.size();
+            }
         }
     }
 
@@ -54,8 +75,10 @@ public class JavaListner extends JavaParserBaseListener {
                     .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
                     .map(x -> x.getText()).collect(Collectors.toList());
 
-            if (list.size() > 0)
+            if (list.size() > 0) {
                 System.out.println("<Local Var> " + fieldType + " " + list);
+                totalCriticalVars += list.size();
+            }
         }
 
         if (isSafeType(fieldType)) {
@@ -64,8 +87,10 @@ public class JavaListner extends JavaParserBaseListener {
                     .filter(x -> isCriticalVariable(x.variableDeclaratorId().getText()))
                     .map(x -> x.getText()).collect(Collectors.toList());
 
-            if (list.size() > 0)
+            if (list.size() > 0) {
                 System.out.println("<Safe Local Var>  " + fieldType + " " + list);
+                totalSafeCriticalVars += list.size();
+            }
         }
     }
 

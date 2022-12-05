@@ -57,14 +57,14 @@ public class TargetSDK {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
                 listFilesForFolder(fileEntry);
-            } else if (isJava(fileEntry)) {
+            } else if (isSourceFile(fileEntry)) {
                 files.add(fileEntry);
                 // System.out.println(fileEntry.getPath());
             }
         }
     }
 
-    private boolean isJava(File file) {
+    private boolean isSourceFile(File file) {
         return file.getName().endsWith(fileExtension);
     }
 

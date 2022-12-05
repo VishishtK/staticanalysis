@@ -13,6 +13,14 @@ import com.cns.grammar.GoParserBaseListener;
 
 public class GoLangListner extends GoParserBaseListener {
 
+    long totalCriticalVars = 0;
+    long totalCriticalFields = 0;
+    long totalCriticalMethods = 0;
+
+    long totalSafeCriticalVars = 0;
+    long totalSafeCriticalFields = 0;
+    long totalSafeCriticalMethods = 0;
+
     @Override
     public void enterFunctionDecl(GoParser.FunctionDeclContext ctx) {
         if (ctx.signature().result() == null) {
@@ -28,24 +36,31 @@ public class GoLangListner extends GoParserBaseListener {
                     .filter(p -> p.type_().getText().equals("string"))
                     .collect(Collectors.toList());
 
-            if (paramsStrings.size() > 0)
-                System.out.println("Method Return Params " + ctx.IDENTIFIER().getText());
+            if (paramsStrings.size() > 0) {
+                System.out.println("<Method Return Params> " + ctx.IDENTIFIER().getText());
+                totalCriticalMethods += paramsStrings.size();
+            }
 
             paramsStrings = ctx.signature().result().parameters().parameterDecl()
                     .stream()
                     .filter(p -> isSafeType(p.type_().getText()))
                     .collect(Collectors.toList());
 
-            if (paramsStrings.size() > 0)
-                System.out.println("Safe Method Return Params " + ctx.IDENTIFIER().getText());
+            if (paramsStrings.size() > 0) {
+                System.out.println("<Safe Method Return Params> " + ctx.IDENTIFIER().getText());
+                totalSafeCriticalMethods += paramsStrings.size();
+            }
+
         }
 
         if (ctx.signature().result().type_() != null) {
             if (ctx.signature().result().type_().getText().equals("string")) {
-                System.out.println("Method Return Type " + ctx.IDENTIFIER().getText());
+                System.out.println("<Method Return Type> " + ctx.IDENTIFIER().getText());
+                totalCriticalMethods++;
             }
             if (isSafeType(ctx.signature().result().type_().getText())) {
-                System.out.println("Safe Method Return Type " + ctx.IDENTIFIER().getText());
+                System.out.println("<Safe Method Return Type> " + ctx.IDENTIFIER().getText());
+                totalSafeCriticalMethods++;
             }
         }
 
@@ -66,24 +81,31 @@ public class GoLangListner extends GoParserBaseListener {
                     .filter(p -> p.type_().getText().equals("string"))
                     .collect(Collectors.toList());
 
-            if (paramsStrings.size() > 0)
-                System.out.println("Method Return Params " + ctx.IDENTIFIER().getText());
+            if (paramsStrings.size() > 0) {
+                System.out.println("<Method Return Params> " + ctx.IDENTIFIER().getText());
+                totalCriticalMethods += paramsStrings.size();
+            }
 
             paramsStrings = ctx.signature().result().parameters().parameterDecl()
                     .stream()
                     .filter(p -> isSafeType(p.type_().getText()))
                     .collect(Collectors.toList());
 
-            if (paramsStrings.size() > 0)
-                System.out.println("Safe Method Return Params " + ctx.IDENTIFIER().getText());
+            if (paramsStrings.size() > 0) {
+                System.out.println("<Safe Method Return Params> " + ctx.IDENTIFIER().getText());
+                totalSafeCriticalMethods += paramsStrings.size();
+            }
+
         }
 
         if (ctx.signature().result().type_() != null) {
             if (ctx.signature().result().type_().getText().equals("string")) {
-                System.out.println("Method Return Type " + ctx.IDENTIFIER().getText());
+                System.out.println("<Method Return Type> " + ctx.IDENTIFIER().getText());
+                totalCriticalMethods++;
             }
             if (isSafeType(ctx.signature().result().type_().getText())) {
-                System.out.println("Safe Method Return Type " + ctx.IDENTIFIER().getText());
+                System.out.println("<Safe Method Return Type> " + ctx.IDENTIFIER().getText());
+                totalSafeCriticalMethods++;
             }
         }
     }
@@ -107,8 +129,10 @@ public class GoLangListner extends GoParserBaseListener {
                             .collect(Collectors.toList()));
         }
 
-        if (criticalVars.size() > 0)
-            System.out.println("Struct feild " + criticalVars);
+        if (criticalVars.size() > 0) {
+            System.out.println("<Struct feild> " + criticalVars);
+            totalCriticalFields += criticalVars.size();
+        }
 
         identifiers = ctx.fieldDecl()
                 .stream()
@@ -127,18 +151,20 @@ public class GoLangListner extends GoParserBaseListener {
                             .collect(Collectors.toList()));
         }
 
-        if (criticalVars.size() > 0)
-            System.out.println("Safe Struct feild " + criticalVars);
+        if (criticalVars.size() > 0) {
+            System.out.println("<Safe Struct feild> " + criticalVars);
+            totalSafeCriticalFields += criticalVars.size();
+        }
 
     }
 
     // @Override
     // public void enterTypeSpec(GoParser.TypeSpecContext ctx) {
-    //     if (ctx.type_().typeLit() != null
-    //             && ctx.type_().typeLit().structType() != null
-    //             && isCriticalVariable(ctx.IDENTIFIER().getText())) {
-    //         System.out.println("Struct " + ctx.IDENTIFIER().getText());
-    //     }
+    // if (ctx.type_().typeLit() != null
+    // && ctx.type_().typeLit().structType() != null
+    // && isCriticalVariable(ctx.IDENTIFIER().getText())) {
+    // System.out.println("Struct " + ctx.IDENTIFIER().getText());
+    // }
 
     // }
 
@@ -150,8 +176,10 @@ public class GoLangListner extends GoParserBaseListener {
                     .map(i -> i.getText())
                     .collect(Collectors.toList());
 
-            if (criticalVars.size() > 0)
-                System.out.println("Var " + criticalVars);
+            if (criticalVars.size() > 0) {
+                System.out.println("<Var> " + criticalVars);
+                totalCriticalVars += criticalVars.size();
+            }
         }
 
         if (ctx.type_() == null || isSafeType(ctx.type_().getText())) {
@@ -160,8 +188,10 @@ public class GoLangListner extends GoParserBaseListener {
                     .map(i -> i.getText())
                     .collect(Collectors.toList());
 
-            if (criticalVars.size() > 0)
-                System.out.println("Safe Var " + criticalVars);
+            if (criticalVars.size() > 0) {
+                System.out.println("<Safe Var> " + criticalVars);
+                totalSafeCriticalVars += criticalVars.size();
+            }
         }
 
     }

@@ -1,5 +1,14 @@
 package com.cns.staticanalysis;
 
-public interface AnalyseFile {
-    public void Analyse();
+public abstract class AnalyseFile {
+
+    long totalCriticalVars;
+    long totalCriticalFields;
+    long totalCriticalMethods;
+
+    long totalSafeCriticalVars;
+    long totalSafeCriticalFields;
+    long totalSafeCriticalMethods;
+
+    public abstract void Analyse();
 }
