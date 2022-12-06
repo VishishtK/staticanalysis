@@ -97,7 +97,8 @@ public class TargetSDK {
 
         try {
             BufferedWriter writer = new BufferedWriter(
-                    new FileWriter(pathToSDK.substring(pathToSDK.lastIndexOf("/") + 1) + ".csv"));
+                    new FileWriter(
+                            fileExtension + "_output/" + pathToSDK.substring(pathToSDK.lastIndexOf("/") + 1) + ".csv"));
             writer.write(output);
             writer.close();
         } catch (Exception e) {
