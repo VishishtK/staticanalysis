@@ -1,7 +1,7 @@
 Type, Count
-TotalCriticalFields, 33
-TotalCriticalMethods, 36
-TotalCriticalVars, 3
-TotalSafeCriticalFields, 0
-TotalSafeCriticalMethods, 0
-TotalSafeCriticalVars, 0
+UnSafeCriticalFields, 33
+UnSafeCriticalMethods, 36
+UnSafeCriticalVars, 3
+SafeCriticalFields, 0
+SafeCriticalMethods, 0
+SafeCriticalVars, 0
