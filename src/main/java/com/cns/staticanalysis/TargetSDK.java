@@ -3,7 +3,6 @@ package com.cns.staticanalysis;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class TargetSDK {
@@ -88,17 +87,18 @@ public class TargetSDK {
     public void Output() {
         String output = "Type, Count\n";
 
-        output += "TotalCriticalFields, " + this.totalCriticalFields + "\n";
-        output += "TotalCriticalMethods, " + this.totalCriticalMethods + "\n";
-        output += "TotalCriticalVars, " + this.totalCriticalVars + "\n";
-        output += "TotalSafeCriticalFields, " + this.totalSafeCriticalFields + "\n";
-        output += "TotalSafeCriticalMethods, " + this.totalSafeCriticalMethods + "\n";
-        output += "TotalSafeCriticalVars, " + this.totalSafeCriticalVars + "\n";
+        output += "UnSafeCriticalFields, " + this.totalCriticalFields + "\n";
+        output += "UnSafeCriticalMethods, " + this.totalCriticalMethods + "\n";
+        output += "UnSafeCriticalVars, " + this.totalCriticalVars + "\n";
+        output += "SafeCriticalFields, " + this.totalSafeCriticalFields + "\n";
+        output += "SafeCriticalMethods, " + this.totalSafeCriticalMethods + "\n";
+        output += "SafeCriticalVars, " + this.totalSafeCriticalVars + "\n";
 
         try {
             BufferedWriter writer = new BufferedWriter(
                     new FileWriter(
-                            fileExtension.substring(1) + "_output/" + pathToSDK.substring(pathToSDK.lastIndexOf("/") + 1) + ".csv"));
+                            fileExtension.substring(1) + "_output/"
+                                    + pathToSDK.substring(pathToSDK.lastIndexOf("/") + 1) + ".csv"));
             writer.write(output);
             writer.close();
         } catch (Exception e) {

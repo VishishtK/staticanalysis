@@ -14,12 +14,12 @@ for f in csv_files:
     data.append(data_list)
 
 finaldf = pd.DataFrame(data, columns=['SDKs',
-                       'TotalCriticalFields',
-                                      'TotalCriticalMethods',
-                                      'TotalCriticalVars',
-                                      'TotalSafeCriticalFields',
-                                      'TotalSafeCriticalMethods',
-                                      'TotalSafeCriticalVars'])
+                                      'UnSafeCriticalFields',
+                                      'UnSafeCriticalMethods',
+                                      'UnSafeCriticalVars',
+                                      'SafeCriticalFields',
+                                      'SafeCriticalMethods',
+                                      'SafeCriticalVars'])
 
 finaldf.plot(x='SDKs',
              kind='bar',
@@ -40,12 +40,12 @@ for f in csv_files:
     data.append(data_list)
 
 finaldfJava = pd.DataFrame(data, columns=['SDKs',
-                                          'TotalCriticalFields',
-                                          'TotalCriticalMethods',
-                                          'TotalCriticalVars',
-                                          'TotalSafeCriticalFields',
-                                          'TotalSafeCriticalMethods',
-                                          'TotalSafeCriticalVars'])
+                                          'UnSafeCriticalFields',
+                                          'UnSafeCriticalMethods',
+                                          'UnSafeCriticalVars',
+                                          'SafeCriticalFields',
+                                          'SafeCriticalMethods',
+                                          'SafeCriticalVars'])
 
 finaldfJava.plot(x='SDKs',
                  kind='bar',
