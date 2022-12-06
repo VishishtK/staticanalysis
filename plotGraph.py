@@ -10,6 +10,9 @@ for f in csv_files:
     # read the csv file
     df = pd.read_csv(f)
     data_list = df[' Count'].tolist()
+    sum_list = sum(data_list)
+    for i in range(0, len(data_list)):
+        data_list[i] = data_list[i]*100 / sum_list
     data_list.insert(0, f.split("/")[-1].split(".")[0])
     data.append(data_list)
 
@@ -36,6 +39,9 @@ for f in csv_files:
     # read the csv file
     df = pd.read_csv(f)
     data_list = df[' Count'].tolist()
+    sum_list = sum(data_list)
+    for i in range(0, len(data_list)):
+        data_list[i] = data_list[i]*100 / sum_list
     data_list.insert(0, f.split("/")[-1].split(".")[0])
     data.append(data_list)
 
