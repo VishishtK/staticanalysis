@@ -1,6 +1,9 @@
 package com.cns.staticanalysis;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TargetSDK {
@@ -65,7 +68,6 @@ public class TargetSDK {
             this.totalSafeCriticalVars += file.totalSafeCriticalVars;
         }
 
-
     }
 
     private void listFilesForFolder(final File folder) {
@@ -81,6 +83,33 @@ public class TargetSDK {
 
     private boolean isSourceFile(File file) {
         return file.getName().endsWith(fileExtension);
+    }
+
+    public void Output() {
+        String output = "Type, Count\n";
+
+        output += "TotalCriticalFields, " + this.totalCriticalFields + "\n";
+        output += "TotalCriticalMethods, " + this.totalCriticalMethods + "\n";
+        output += "TotalCriticalVars, " + this.totalCriticalVars + "\n";
+        output += "TotalSafeCriticalFields, " + this.totalSafeCriticalFields + "\n";
+        output += "TotalSafeCriticalMethods, " + this.totalSafeCriticalMethods + "\n";
+        output += "TotalSafeCriticalVars, " + this.totalSafeCriticalVars + "\n";
+
+        try {
+            BufferedWriter writer = new BufferedWriter(
+                    new FileWriter(pathToSDK.substring(pathToSDK.lastIndexOf("/") + 1) + ".csv"));
+            writer.write(output);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        try {
+            Runtime.getRuntime().exec("python3.9 plotGraph.py ");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,7 +1,8 @@
-/Users/vishy/staticanalyser/src/main/java/com/cns/staticanalysis/GolangListner.java
 /Users/vishy/staticanalyser/src/main/java/com/cns/staticanalysis/TargetSDK.java
 /Users/vishy/staticanalyser/target/generated-sources/antlr4/com/cns/grammar/GoLexer.java
 /Users/vishy/staticanalyser/target/generated-sources/antlr4/com/cns/grammar/GoParserBaseListener.java
+/Users/vishy/staticanalyser/src/main/java/com/cns/staticanalysis/AnalyseFile.java
+/Users/vishy/staticanalyser/src/main/java/com/cns/staticanalysis/GoLangListner.java
 /Users/vishy/staticanalyser/target/generated-sources/antlr4/com/cns/grammar/JavaParserListener.java
 /Users/vishy/staticanalyser/target/generated-sources/antlr4/com/cns/grammar/JavaLexer.java
 /Users/vishy/staticanalyser/target/generated-sources/antlr4/com/cns/grammar/GoParser.java
