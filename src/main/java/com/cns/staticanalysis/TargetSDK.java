@@ -98,18 +98,11 @@ public class TargetSDK {
         try {
             BufferedWriter writer = new BufferedWriter(
                     new FileWriter(
-                            fileExtension + "_output/" + pathToSDK.substring(pathToSDK.lastIndexOf("/") + 1) + ".csv"));
+                            fileExtension.substring(1) + "_output/" + pathToSDK.substring(pathToSDK.lastIndexOf("/") + 1) + ".csv"));
             writer.write(output);
             writer.close();
         } catch (Exception e) {
             System.out.println(e.toString());
-        }
-
-        try {
-            Runtime.getRuntime().exec("python3.9 plotGraph.py ");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
